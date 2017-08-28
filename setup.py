@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 #
-# Autopilot Functional Test Tool
+# Rocketpilot Functional Test Tool
+# Copyright (C) 2017 Igor Malinovskiy
 # Copyright (C) 2012-2014 Canonical
 #
 # This program is free software: you can redistribute it and/or modify
@@ -17,28 +18,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-from setuptools import find_packages, setup, Extension
+from setuptools import find_packages, setup
 
 import sys
 assert sys.version_info >= (3,), 'Python 3 is required'
 
 
-VERSION = '1.6.0'
+VERSION = '0.1.0'
 
 
 setup(
-    name='autopilot',
+    name='rocketpilot',
     version=VERSION,
-    description='Functional testing tool for Ubuntu.',
-    author='Thomi Richards',
-    author_email='thomi.richards@canonical.com',
-    url='https://launchpad.net/autopilot',
+    description='Cross-platform tool for functional GUI testing of Qt applications '
+                'based on Cannonical Autopilot project.',
+    author='Igor Malinovskiy',
+    author_email='u.glide@gmail.com',
+    url='https://github.com/uglide/RocketPilot',
     license='GPLv3',
     packages=find_packages(),
     test_suite='autopilot.tests',
-    scripts=['bin/autopilot3-sandbox-run'],
     ext_modules=[],
     entry_points={
-        'console_scripts': ['autopilot3 = autopilot.run:main']
+        'console_scripts': ['rocketpilot = autopilot.run:main']
     }
 )

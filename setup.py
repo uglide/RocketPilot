@@ -36,8 +36,14 @@ setup(
     author_email='u.glide@gmail.com',
     url='https://github.com/uglide/RocketPilot',
     license='GPLv3',
+    install_requires=[
+        'decorator',
+        'psutil',
+        'testtools',
+        'dbus-python',
+        'PyUserInput',
+    ],
     packages=find_packages(),
-    test_suite='autopilot.tests',
     ext_modules=[],
     entry_points={
         'console_scripts': ['rocketpilot = autopilot.run:main']

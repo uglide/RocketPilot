@@ -1,0 +1,20 @@
+div.otto-says-container .otto-image-container {
+    position: absolute;
+    margin-top: 4px;
+    margin-left: 4px;
+}
+
+div.otto-says-container .admonition-autopilot-says {
+    vertical-align: top;
+    padding:5px;
+    padding-left: 74px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+div.otto-says-container {
+    min-height: 70px;
+    background-color: #EEE;
+    border: 1px solid #CCC;
+    margin-bottom: 2px;
+}

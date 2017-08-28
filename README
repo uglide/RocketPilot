@@ -1,0 +1,97 @@
+Welcome to the Autopilot source code!
+#####################################
+
+Autopilot is a tool for writing functional tests for GUI applications.
+
+Autopilot is free software, licensed under GNU General Public License (GPLv3+).
+
+Links
+=====
+
+- Project Home (Source Code, Version Control, Bug Tracking, etc):
+  https://launchpad.net/autopilot
+
+- Documentation (Tutorial, FAQ, API Reference, etc):
+  https://developer.ubuntu.com/api/autopilot/python/1.6.0/
+
+- IRC channel is #ubuntu-autopilot on irc.freenode.net
+
+
+Build Instructions
+==================
+
+Autopilot is not buildable within a python virtualenv, as it requires several packages that are not available on ``pypi``. Instead, either use autopilot from the source tree, or build debian packages instead. Instructions for building debian packages are below:
+
+Assuming a current ubuntu installation, make sure you have the build tools that are required installed::
+
+	$ sudo apt-get install devscripts equivs bzr-builddeb
+
+Then install the build-dependencies for the autopilot packages::
+
+	$ sudo mk-build-deps -i
+
+Then build the debian packages::
+
+	$ bzr bd
+
+bzr-builddeb will build binary packages into the parent directory, or into '../build-area/' if you do not own the correct gpg key to sign the package. The resulting ``.deb`` files can be installed as normal with ``sudo dpkg -i package.deb``.
+
+The documentation can be built separately from the debian packages::
+
+	$ python3 setup.py build_sphinx
+
+The docs are built into 'build/sphinx/html' and can be opened in the default browser with::
+
+	$ xdg-open build/sphinx/html/index.html
+
+
+Running and Listing tests
+=========================
+
+Normally running autopilot tests is as easy as::
+
+    $ autopilot3 run <test id>
+
+There are some complexities when attempting to run the autopilot tests from
+within a development branch (this related to how autopilot modules are loaded
+and then used to attempt to collect the required tests).
+
+For that reason when running autopilot's tests while hacking on it it is
+advised to run autopilot in this manner::
+
+    $ python3 -m autopilot.run run autopilot.tests.unit
+
+Listing is similar::
+
+    $ python3 -m autopilot.run list autopilot.tests.unit
+
+For a more complete explanation for running or listing tests please see the
+full documentation found here:
+https://developer.ubuntu.com/api/autopilot/python/1.6.0/guides-running_ap/
+
+If you are in the root of the autopilot source tree this will run/list the tests from
+within that local module. Otherwise autopilot will look in the system python path.
+
+Release Autopilot
+=================
+1. Open a new request on bileto: https://bileto.ubuntu.com/ with the lp:autopilot -> lp:autopilot/1.5 merge proposal
+2. Add the relevant details (i.e. bug fix details in the landing description and a link to the testplan: https://wiki.ubuntu.com/Process/Merges/TestPlan/autopilot)
+3. Build the silo and run the tests
+4. Once happy with all tests approve and publish the result
+
+Release Manual Tests
+====================
+
+Not all our tests are automated at the moment. Specifically, the vis tool is lacking some automated tests due to deficiancies in other packages. Until we remedy this situation, the following things need to be manually tested upon an autopilot release:
+
+- Run the following tests by running both: ``autopilot vis`` and ``autopilot3 vis``.
+ - Run 'window-mocker -testability' and the vis tool.
+  - Make sure you can select window-mocker from the connection list.
+  - Make sure the top-level tree node is 'window-mocker'
+ - Run the vis tool with the '-testability' flag enabled. Run a second vis tool, and make sure that the second vis tool can introspect the first.
+ - Make sure that the component overlay feature highlights the selected item in the tree view, as long as it has a globalRect.
+ - Make sure that searching works:
+  - Searching narrows down tree view to just the nodes that match the search criteria.
+  - Searching turns off the current component overlay (if any).
+  - Resetting the search restores the tree view to the full tree.
+  - Resetting the search turns off the current component overlay (if any).

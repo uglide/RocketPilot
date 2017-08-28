@@ -1,0 +1,4 @@
+This is the root directory for autopilot tests. The "unit" folder contains unit tests that are run when the autopilot packae builds. They must not have any external dependancies (especially not to, for example X11). The "functional" folder contains larger tests that may depend on external components.
+
+Both these folders are packages in the 'python-autopilot-tests' package.
+

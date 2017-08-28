@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="457.90549"
+   height="130.93919"
+   viewBox="293 90 257.46813 66.055185"
+   id="svg5641"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="test_stages.svg">
+  <metadata
+     id="metadata5671">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs5669" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1871"
+     inkscape:window-height="1056"
+     id="namedview5667"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="208.15309"
+     inkscape:cy="70.662305"
+     inkscape:window-x="1969"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5641"
+     fit-margin-top="3"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="3" />
+  <g
+     id="g6265"
+     transform="matrix(0.5,0,0,0.5,145.5,42.325996)">
+    <polygon
+       style="fill:#87d3fa;fill-opacity:1"
+       points="387,93 478,162 387,231 387,196.5 296,196.5 341.5,162 296,127.5 387,127.5 "
+       id="polygon5645" />
+    <polygon
+       style="fill:none;stroke:#000000;stroke-width:2"
+       points="387,93 478,162 387,231 387,196.5 296,196.5 341.5,162 296,127.5 387,127.5 "
+       id="polygon5647" />
+    <g
+       transform="translate(0,-0.5)"
+       id="g5716">
+      <polygon
+         id="polygon5649"
+         points="478,162 387,231 387,196.5 296,196.5 341.5,162 296,127.5 387,127.5 387,93 "
+         style="fill:none;stroke:#000000;stroke-width:2" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5673"
+         y="167.89262"
+         x="357.34113"
+         style="font-size:22.49094009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+           y="167.89262"
+           x="357.34113"
+           id="tspan5675"
+           sodipodi:role="line">Setup</tspan></text>
+    </g>
+  </g>
+  <text
+     sodipodi:linespacing="125%"
+     id="text5677"
+     y="121.2338"
+     x="402.87329"
+     style="font-size:11.24547005px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+     xml:space="preserve"><tspan
+       y="121.2338"
+       x="402.87329"
+       id="tspan5679"
+       sodipodi:role="line" /></text>
+  <g
+     id="g6279"
+     transform="matrix(0.5,0,0,0.5,145.5,42.325996)">
+    <g
+       transform="translate(-2.9058448,-0.6131)"
+       id="g5651"
+       style="fill:#87faa3;fill-opacity:1">
+      <polygon
+         id="polygon5653"
+         points="509.874,162.113 464.374,127.613 555.374,127.613 555.374,93.1132 646.374,162.113 555.374,231.113 555.374,196.613 464.374,196.613 "
+         style="fill:#87faa3;fill-opacity:1" />
+      <polygon
+         id="polygon5655"
+         points="509.874,162.113 464.374,127.613 555.374,127.613 555.374,93.1132 646.374,162.113 555.374,231.113 555.374,196.613 464.374,196.613 "
+         style="fill:#87faa3;fill-opacity:1;stroke:#000000;stroke-width:2" />
+      <polygon
+         id="polygon5657"
+         points="509.874,162.113 464.374,127.613 555.374,127.613 555.374,93.1132 646.374,162.113 555.374,231.113 555.374,196.613 464.374,196.613 "
+         style="fill:#87faa3;fill-opacity:1;stroke:#000000;stroke-width:2" />
+    </g>
+    <text
+       sodipodi:linespacing="125%"
+       id="text5689"
+       y="169.15817"
+       x="511.56009"
+       style="font-size:22.49094009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         y="169.15817"
+         x="511.56009"
+         id="tspan5691"
+         sodipodi:role="line">Interact</tspan></text>
+  </g>
+  <g
+     id="g6249"
+     transform="matrix(0.5,0,0,0.5,145.5,42.325996)">
+    <g
+       transform="translate(0.56227597,-1.1582)"
+       id="g5659"
+       style="fill:#faf787;fill-opacity:1">
+      <polygon
+         id="polygon5661"
+         points="626.374,128.158 717.374,128.158 717.374,93.6584 808.374,162.658 717.374,231.658 717.374,197.158 626.374,197.158 671.874,162.658 "
+         style="fill:#faf787;fill-opacity:1" />
+      <polygon
+         id="polygon5663"
+         points="626.374,128.158 717.374,128.158 717.374,93.6584 808.374,162.658 717.374,231.658 717.374,197.158 626.374,197.158 671.874,162.658 "
+         style="fill:#faf787;fill-opacity:1;stroke:#000000;stroke-width:2" />
+      <polygon
+         id="polygon5665"
+         points="626.374,128.158 717.374,128.158 717.374,93.6584 808.374,162.658 717.374,231.658 717.374,197.158 626.374,197.158 671.874,162.658 "
+         style="fill:#faf787;fill-opacity:1;stroke:#000000;stroke-width:2" />
+    </g>
+    <text
+       sodipodi:linespacing="125%"
+       id="text5693"
+       y="169.15817"
+       x="685.28821"
+       style="font-size:22.49094009px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Ubuntu;-inkscape-font-specification:Ubuntu"
+         y="169.15817"
+         x="685.28821"
+         id="tspan5695"
+         sodipodi:role="line">Assert</tspan></text>
+  </g>
+</svg>

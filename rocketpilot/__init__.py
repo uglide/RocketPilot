@@ -17,8 +17,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from .aplication import launch_test_application
+from .launcher import ApplicationLauncher
+from .application import ApplicationProxy
 
 __all__ = [
-    'launch_test_application',
+    'ApplicationLauncher',
+    'ApplicationProxy',
 ]

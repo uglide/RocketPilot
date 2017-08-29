@@ -17,9 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-
-from rocketpilot._debug import DebugProfile
-
 import logging
 
 logger = logging.getLogger(__name__)
@@ -38,19 +35,6 @@ def set_log_verbose(verbose):
     if type(verbose) is not bool:
         raise TypeError("Verbose flag must be a boolean.")
     _log_verbose = verbose
-
-
-_debug_profile_fixture = DebugProfile
-
-
-def set_debug_profile_fixture(fixture_class):
-    global _debug_profile_fixture
-    _debug_profile_fixture = fixture_class
-
-
-def get_debug_profile_fixture():
-    global _debug_profile_fixture
-    return _debug_profile_fixture
 
 
 _default_timeout_value = 10

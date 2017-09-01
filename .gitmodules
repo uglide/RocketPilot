@@ -1,0 +1,3 @@
+[submodule "rocketpilot-driver"]
+	path = rocketpilot-driver
+	url = https://github.com/uglide/rocketpilot-driver.git

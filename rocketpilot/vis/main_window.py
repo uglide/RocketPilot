@@ -21,7 +21,7 @@
 import logging
 
 import dbus
-from PyQt5 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 
 from rocketpilot.constants import AP_INTROSPECTION_IFACE
 from rocketpilot.exceptions import StateNotFoundError
@@ -40,7 +40,7 @@ from rocketpilot.vis.resources import (
 _logger = logging.getLogger(__name__)
 
 
-class MainWindow(QtGui.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, dbus_bus):
         super(MainWindow, self).__init__()
         self.selectable_interfaces = {}
@@ -59,7 +59,7 @@ class MainWindow(QtGui.QMainWindow):
             self.restoreState(window_state.data())
         try:
             self.toggle_overlay_action.setChecked(
-                settings.value("overlayChecked", type="bool")
+                settings.value("overlayChecked", object_type="bool")
             )
         except TypeError:
             pass
@@ -80,7 +80,7 @@ class MainWindow(QtGui.QMainWindow):
         self.setWindowTitle("Autopilot Vis")
         self.statusBar().showMessage('Waiting for first valid dbus connection')
 
-        self.splitter = QtGui.QSplitter(self)
+        self.splitter = QtWidgets.QSplitter(self)
         self.splitter.setChildrenCollapsible(False)
         self.tree_view = ProxyObjectTreeViewWidget(self.splitter)
         self.detail_widget = TreeNodeDetailWidget(self.splitter)
@@ -206,7 +206,7 @@ class MainWindow(QtGui.QMainWindow):
         self.visual_indicator.tree_node_changed(proxy)
 
 
-class VisualComponentPositionIndicator(QtGui.QWidget):
+class VisualComponentPositionIndicator(QtWidgets.QWidget):
 
     def __init__(self, parent=None):
         super(VisualComponentPositionIndicator, self).__init__(None)
@@ -232,11 +232,11 @@ class VisualComponentPositionIndicator(QtGui.QWidget):
         self._maybe_update()
 
     def paintEvent(self, paint_evt):
-        opt = QtGui.QStyleOption()
-        opt.init(self)
+        opt = QtWidgets.QStyleOption()
+        opt.initFrom(self)
         p = QtGui.QPainter(self)
         self.style().drawPrimitive(
-            QtGui.QStyle.PE_Widget,
+            QtWidgets.QStyle.PE_Widget,
             opt,
             p,
             self
@@ -268,17 +268,17 @@ class VisualComponentPositionIndicator(QtGui.QWidget):
             self.setVisible(should_be_visible)
 
 
-class ProxyObjectTreeView(QtGui.QTreeView):
+class ProxyObjectTreeView(QtWidgets.QTreeView):
 
     """A subclass of QTreeView with a few customisations."""
 
     def __init__(self, parent=None):
         super(ProxyObjectTreeView, self).__init__(parent)
-        self.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
-        self.header().setResizeMode(QtGui.QHeaderView.ResizeToContents)
+        self.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.header().setResizeMode(QtWidgets.QHeaderView.ResizeToContents)
         self.header().setStretchLastSection(False)
 
-    def scrollTo(self, index, hint=QtGui.QAbstractItemView.EnsureVisible):
+    def scrollTo(self, index, hint=QtWidgets.QAbstractItemView.EnsureVisible):
         """Scroll the view to make the node at index visible.
 
         Overriden to stop autoScroll from horizontally jumping when selecting
@@ -329,19 +329,19 @@ class ProxyObjectTreeView(QtGui.QTreeView):
             vbar.setValue(vbar.value() + new_position)
 
 
-class ProxyObjectTreeViewWidget(QtGui.QWidget):
+class ProxyObjectTreeViewWidget(QtWidgets.QWidget):
     """A Widget that contains a tree view and a few other things."""
 
     selection_changed = QtCore.pyqtSignal('QModelIndex', 'QModelIndex')
 
     def __init__(self, parent=None):
         super(ProxyObjectTreeViewWidget, self).__init__(parent)
-        layout = QtGui.QVBoxLayout(self)
+        layout = QtWidgets.QVBoxLayout(self)
         self.tree_view = ProxyObjectTreeView()
 
         layout.addWidget(self.tree_view)
 
-        self.status_label = QtGui.QLabel("Showing Filtered Results ONLY")
+        self.status_label = QtWidgets.QLabel("Showing Filtered Results ONLY")
         self.status_label.hide()
         layout.addWidget(self.status_label)
         self.setLayout(layout)
@@ -366,13 +366,13 @@ class ProxyObjectTreeViewWidget(QtGui.QWidget):
             self.tree_view.setStyleSheet("")
 
 
-class ConnectionList(QtGui.QComboBox):
+class ConnectionList(QtWidgets.QComboBox):
     """Used to show a list of applications we can connect to."""
 
     def __init__(self):
         super(ConnectionList, self).__init__()
         self.setObjectName("ConnectionList")
-        self.setSizeAdjustPolicy(QtGui.QComboBox.AdjustToContents)
+        self.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
 
     @QtCore.pyqtSlot(str)
     def trySetSelectedItem(self, desired_text):
@@ -511,29 +511,29 @@ class VisTreeModel(QtCore.QAbstractItemModel):
         return None
 
 
-class FilterPane(QtGui.QDockWidget):
+class FilterPane(QtWidgets.QDockWidget):
 
     """A widget that provides a filter UI."""
 
     apply_filter = QtCore.pyqtSignal(str, list)
     reset_filter = QtCore.pyqtSignal()
 
-    class ControlWidget(QtGui.QWidget):
+    class ControlWidget(QtWidgets.QWidget):
 
         def __init__(self, parent=None):
             super(FilterPane.ControlWidget, self).__init__(parent)
-            self._layout = QtGui.QFormLayout(self)
+            self._layout = QtWidgets.QFormLayout(self)
 
-            self.node_name_edit = QtGui.QLineEdit()
+            self.node_name_edit = QtWidgets.QLineEdit()
             self._layout.addRow(
-                QtGui.QLabel("Node Name:"),
+                QtWidgets.QLabel("Node Name:"),
                 self.node_name_edit
             )
 
-            btn_box = QtGui.QDialogButtonBox()
-            self.apply_btn = btn_box.addButton(QtGui.QDialogButtonBox.Apply)
+            btn_box = QtWidgets.QDialogButtonBox()
+            self.apply_btn = btn_box.addButton(QtWidgets.QDialogButtonBox.Apply)
             self.apply_btn.setDefault(True)
-            self.reset_btn = btn_box.addButton(QtGui.QDialogButtonBox.Reset)
+            self.reset_btn = btn_box.addButton(QtWidgets.QDialogButtonBox.Reset)
             self._layout.addRow(btn_box)
 
             self.setLayout(self._layout)

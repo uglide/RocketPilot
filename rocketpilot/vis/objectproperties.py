@@ -21,7 +21,7 @@
 """Code for introspection tree object properties."""
 
 
-from PyQt5 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 
 
 from rocketpilot.vis.resources import get_qt_icon, dbus_string_rep
@@ -31,7 +31,7 @@ from rocketpilot.introspection.qt import QtObjectProxyMixin
 __all__ = ['TreeNodeDetailWidget']
 
 
-class TreeNodeDetailWidget(QtGui.QTabWidget):
+class TreeNodeDetailWidget(QtWidgets.QTabWidget):
     """A widget that shows tree node details."""
 
     def __init__(self, parent):
@@ -63,7 +63,7 @@ class TreeNodeDetailWidget(QtGui.QTabWidget):
             self.widget(i).new_node_selected(new_node)
 
 
-class AbstractView(QtGui.QWidget):
+class AbstractView(QtWidgets.QWidget):
 
     """An abstract class that outlines the methods required to be used in the
     details view widget.
@@ -97,14 +97,14 @@ class PropertyView(AbstractView):
         super(PropertyView, self).__init__(*args, **kwargs)
 
         header_titles = ["Name", "Value"]
-        self.details_layout = QtGui.QVBoxLayout(self)
+        self.details_layout = QtWidgets.QVBoxLayout(self)
 
-        self.table_view = QtGui.QTableWidget()
+        self.table_view = QtWidgets.QTableWidget()
         self.table_view.setColumnCount(2)
         self.table_view.verticalHeader().setVisible(False)
         self.table_view.setAlternatingRowColors(True)
         self.table_view.setHorizontalHeaderLabels(header_titles)
-        self.table_view.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self.table_view.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.details_layout.addWidget(self.table_view)
 
     def name(self):
@@ -122,8 +122,8 @@ class PropertyView(AbstractView):
         self.table_view.setRowCount(len(object_details))
         for i, key in enumerate(object_details):
             details_string = dbus_string_rep(object_details[key])
-            item_name = QtGui.QTableWidgetItem(key)
-            item_details = QtGui.QTableWidgetItem(
+            item_name = QtWidgets.QTableWidgetItem(key)
+            item_details = QtWidgets.QTableWidgetItem(
                 details_string)
             self.table_view.setItem(i, 0, item_name)
             self.table_view.setItem(i, 1, item_details)
@@ -139,15 +139,15 @@ class SignalView(AbstractView):
     def __init__(self, *args, **kwargs):
         super(SignalView, self).__init__(*args, **kwargs)
 
-        self.details_layout = QtGui.QVBoxLayout(self)
+        self.details_layout = QtWidgets.QVBoxLayout(self)
 
-        self.signals_table = QtGui.QTableWidget()
+        self.signals_table = QtWidgets.QTableWidget()
         self.signals_table.setColumnCount(1)
         self.signals_table.verticalHeader().setVisible(False)
         self.signals_table.setAlternatingRowColors(True)
         self.signals_table.setHorizontalHeaderLabels(["Signal Signature"])
         self.signals_table.setEditTriggers(
-            QtGui.QAbstractItemView.NoEditTriggers)
+            QtWidgets.QAbstractItemView.NoEditTriggers)
         self.details_layout.addWidget(self.signals_table)
 
     def name(self):
@@ -166,7 +166,7 @@ class SignalView(AbstractView):
         self.signals_table.setRowCount(len(signals))
         for i, signal in enumerate(signals):
             self.signals_table.setItem(
-                i, 0, QtGui.QTableWidgetItem(str(signal)))
+                i, 0, QtWidgets.QTableWidgetItem(str(signal)))
         self.signals_table.setSortingEnabled(True)
         self.signals_table.sortByColumn(0, QtCore.Qt.AscendingOrder)
         self.signals_table.resizeColumnsToContents()
@@ -179,15 +179,15 @@ class SlotView(AbstractView):
     def __init__(self, *args, **kwargs):
         super(SlotView, self).__init__(*args, **kwargs)
 
-        self.details_layout = QtGui.QVBoxLayout(self)
+        self.details_layout = QtWidgets.QVBoxLayout(self)
 
-        self.slots_table = QtGui.QTableWidget()
+        self.slots_table = QtWidgets.QTableWidget()
         self.slots_table.setColumnCount(1)
         self.slots_table.verticalHeader().setVisible(False)
         self.slots_table.setAlternatingRowColors(True)
         self.slots_table.setHorizontalHeaderLabels(["Slot Signature"])
         self.slots_table.setEditTriggers(
-            QtGui.QAbstractItemView.NoEditTriggers)
+            QtWidgets.QAbstractItemView.NoEditTriggers)
         self.details_layout.addWidget(self.slots_table)
 
     def name(self):
@@ -205,7 +205,7 @@ class SlotView(AbstractView):
         signals = node.get_slots()
         self.slots_table.setRowCount(len(signals))
         for i, signal in enumerate(signals):
-            self.slots_table.setItem(i, 0, QtGui.QTableWidgetItem(str(signal)))
+            self.slots_table.setItem(i, 0, QtWidgets.QTableWidgetItem(str(signal)))
         self.slots_table.setSortingEnabled(True)
         self.slots_table.sortByColumn(0, QtCore.Qt.AscendingOrder)
         self.slots_table.resizeColumnsToContents()

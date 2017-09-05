@@ -25,11 +25,11 @@ import sys
 def vis_main(extra_flags):
     # To aid in testing only import when we are launching the GUI component
     from dbus.mainloop.qt import DBusQtMainLoop
-    from PyQt5 import QtGui
+    from PyQt5 import QtWidgets
     from rocketpilot.vis.main_window import MainWindow
     from rocketpilot.vis.bus_enumerator import BusEnumerator
 
-    app = QtGui.QApplication(sys.argv + extra_flags)
+    app = QtWidgets.QApplication(sys.argv + extra_flags)
     app.setApplicationName("Autopilot")
     app.setOrganizationName("Canonical")
 

@@ -46,6 +46,6 @@ setup(
     packages=find_packages(),
     ext_modules=[],
     entry_points={
-        'console_scripts': ['rocketpilot = autopilot.run:main']
+        'console_scripts': ['rocketpilot-vis = rocketpilot.vis:vis_main']
     }
 )

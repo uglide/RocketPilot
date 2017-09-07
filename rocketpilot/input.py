@@ -63,7 +63,7 @@ def get_center_point(object_proxy):
     try:
         x, y, w, h = object_proxy.globalRect
         _logger.debug("Moving to object's globalRect coordinates.")
-        return x+w/2, y+h/2
+        return x + w//2, y + h//2
     except AttributeError:
         pass
     except (TypeError, ValueError):
@@ -84,7 +84,7 @@ def get_center_point(object_proxy):
         _logger.debug(
             "Moving to object's center point calculated from x,y,w,h "
             "attributes.")
-        return x+w/2, y+h/2
+        return x + w//2, y + h//2
     except AttributeError:
         raise ValueError(
             "Object '%r' does not have any recognised position attributes" %

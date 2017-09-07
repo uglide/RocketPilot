@@ -125,7 +125,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def on_filter(self, node_name, filters):
         node_name = str(node_name)
         if self.proxy_object:
-            p = self.proxy_object.select_many(node_name)
+            p = self.proxy_object.select_many(objectName=node_name)
             self.tree_model.set_tree_roots(p)
             self.tree_view.set_filtered(True)
         # applying the filter will always invalidate the current overlay
@@ -522,7 +522,7 @@ class FilterPane(QtWidgets.QDockWidget):
 
             self.node_name_edit = QtWidgets.QLineEdit()
             self._layout.addRow(
-                QtWidgets.QLabel("Node Name:"),
+                QtWidgets.QLabel("ObjectName:"),
                 self.node_name_edit
             )
 

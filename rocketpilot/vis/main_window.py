@@ -77,8 +77,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.visual_indicator.close()
 
     def initUI(self):
-        self.setWindowTitle("Autopilot Vis")
-        self.statusBar().showMessage('Waiting for first valid dbus connection')
+        self.setWindowTitle("RocketPilot Introspection Tool")
+        self.statusBar().showMessage('Waiting for rocketpilot-driver at name.glide.rocketpilot')
 
         self.splitter = QtWidgets.QSplitter(self)
         self.splitter.setChildrenCollapsible(False)
@@ -151,9 +151,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 )
             except (dbus.DBusException, RuntimeError) as e:
                 _logger.warning("Invalid introspection interface: %s" % str(e))
-
-            if self.connection_list.count() == 0:
-                self.statusBar().showMessage('No valid connections exist.')
 
     def on_proxy_object_built(self, proxy_object):
         cls_name = proxy_object.__class__.__name__
@@ -275,7 +272,6 @@ class ProxyObjectTreeView(QtWidgets.QTreeView):
     def __init__(self, parent=None):
         super(ProxyObjectTreeView, self).__init__(parent)
         self.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
-        self.header().setResizeMode(QtWidgets.QHeaderView.ResizeToContents)
         self.header().setStretchLastSection(False)
 
     def scrollTo(self, index, hint=QtWidgets.QAbstractItemView.EnsureVisible):

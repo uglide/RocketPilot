@@ -42,6 +42,8 @@ setup(
         'testtools',
         'dbus-python',
         'PyUserInput',
+        'pytz',
+        'python-dateutil',
     ],
     packages=find_packages(),
     ext_modules=[],

@@ -20,6 +20,7 @@
 from collections import defaultdict
 
 from rocketpilot.vis.dbus_search import _start_trawl
+from rocketpilot.constants import ROCKET_PILOT_DBUS_SERVICE_NAME
 
 from PyQt5.QtCore import (
     pyqtSignal,
@@ -74,8 +75,9 @@ class BusEnumerator(QObject):
 
     def start_trawl(self):
         """Start trawling the bus for interfaces."""
-        for connection in self._bus.list_names():
-            _start_trawl(self._bus, connection, self._add_hit)
+
+        if ROCKET_PILOT_DBUS_SERVICE_NAME in self._bus.list_names():
+            _start_trawl(self._bus, ROCKET_PILOT_DBUS_SERVICE_NAME, self._add_hit)
 
     def _add_hit(self, conn_name, obj_name, interface_name):
         self.new_interface_found.emit(conn_name, obj_name, interface_name)

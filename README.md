@@ -16,3 +16,14 @@ source .venv/bin/activate
 
 pip install -e . 
 ```
+### OS X
+
+```
+brew install python3
+
+virtualenv --system-site-packages -p python3 .venv
+
+source .venv/bin/activate
+
+pip install -e . 
+```

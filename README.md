@@ -19,7 +19,7 @@ pip install -e .
 ### OS X
 
 ```
-brew install python3 pkgconfig dbus
+brew install python3 pkgconfig dbus dbus-glib
 brew services start dbus
 
 virtualenv --system-site-packages -p python3 .venv

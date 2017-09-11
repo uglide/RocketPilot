@@ -134,10 +134,6 @@ def get_proxy_object_for_existing_process(**kwargs):
 
     # Force default object_path
     kwargs['object_path'] = kwargs.get('object_path', constants.AUTOPILOT_PATH)
-    # Special handling of pid.
-    pid = _check_process_and_pid_details(process, kwargs.get('pid', None))
-    if pid is not None:
-        kwargs['pid'] = pid
 
     matcher_function = _filter_function_from_search_params(kwargs)
 
@@ -146,16 +142,6 @@ def get_proxy_object_for_existing_process(**kwargs):
         matcher_function,
         process
     )
-
-    if pid is not None:
-        # Due to the filtering including children parents, if there exists a
-        # top-level pid, take that instead of any children that may have
-        # matched.
-        connections = _filter_parent_pids_from_children(
-            pid,
-            connections,
-            dbus_bus
-        )
 
     _raise_if_not_single_result(
         connections,
@@ -202,29 +188,6 @@ def _map_connection_to_pid(connection, dbus_bus):
             (connection, e))
 
 
-def _filter_parent_pids_from_children(
-        pid, connections, dbus_bus, _connection_pid_fn=_map_connection_to_pid):
-    """Return any connections that have an actual pid matching the requested
-    and aren't just a child of that requested pid.
-
-    :param pid: Pid passed in for matching
-    :param connections: List of connections to filter
-    :param dbus_bus: Dbus object that the connections are contained.
-    :param _connection_pid_fn: Function that takes 2 args 'connection' 'dbus
-      object' that returns the pid (or None if not found) of the connection on
-      that dbus bus.
-      (Note: Useful for testing.)
-    :returns: List of suitable connections (e.g. returns what was passed if no
-      connections match the pid (i.e. all matches are children)).
-
-    """
-    for conn in connections:
-        if pid == _connection_pid_fn(conn, dbus_bus):
-            logger.info('Found the parent pid, ignoring any others.')
-            return [conn]
-    return connections
-
-
 def _get_dbus_bus_from_string(dbus_string):
     if dbus_string == 'session':
         return dbus_handler.get_session_bus()
@@ -232,26 +195,6 @@ def _get_dbus_bus_from_string(dbus_string):
         return dbus_handler.get_system_bus()
     else:
         return dbus_handler.get_custom_bus(dbus_string)
-
-
-def _check_process_and_pid_details(process=None, pid=None):
-    """Do error checking on process and pid specification.
-
-    :raises RuntimeError: if both process and pid are specified, but the
-        process's 'pid' attribute is different to the pid attribute specified.
-    :raises ProcessSearchError: if the process specified is not running.
-    :returns: the pid to use in all search queries.
-
-    """
-    if process is not None:
-        if pid is None:
-            pid = process.pid
-        elif pid != process.pid:
-            raise RuntimeError("Supplied PID and process.pid do not match.")
-
-    if pid is not None and not psutil.pid_exists(pid):
-        raise ProcessSearchError("PID %d could not be found" % pid)
-    return pid
 
 
 def _filter_function_from_search_params(search_params, filter_lookup=None):

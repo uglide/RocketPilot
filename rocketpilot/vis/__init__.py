@@ -24,7 +24,7 @@ import sys
 
 def vis_main():
     # To aid in testing only import when we are launching the GUI component
-    from dbus.mainloop.glib import DBusGMainLoop
+    from dbus.mainloop.pyqt5 import DBusQtMainLoop
     from PyQt5 import QtWidgets
     from rocketpilot.vis.main_window import MainWindow
     from rocketpilot.vis.bus_enumerator import BusEnumerator
@@ -33,7 +33,7 @@ def vis_main():
     app.setApplicationName("Autopilot")
     app.setOrganizationName("Canonical")
 
-    dbus_loop = DBusGMainLoop(set_as_default=True)
+    dbus_loop = DBusQtMainLoop(set_as_default=True)
     session_bus = dbus.SessionBus(mainloop=dbus_loop)
 
     window = MainWindow(session_bus)

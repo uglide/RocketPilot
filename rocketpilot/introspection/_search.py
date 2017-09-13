@@ -304,7 +304,7 @@ def _find_matching_connections(bus, connection_matcher, process=None):
         ]
 
         if len(valid_connections) >= 1:
-            return _dedupe_connections_on_pid(valid_connections, bus)
+            return valid_connections
 
     return []
 
@@ -321,18 +321,6 @@ def _raise_if_process_has_exited(process):
 
 def _process_is_running(process):
     return process.poll() is None
-
-
-def _dedupe_connections_on_pid(valid_connections, bus):
-    seen_pids = []
-    deduped_connections = []
-
-    for connection in valid_connections:
-        pid = _get_bus_connections_pid(bus, connection)
-        if pid not in seen_pids:
-            seen_pids.append(pid)
-            deduped_connections.append(connection)
-    return deduped_connections
 
 
 def _raise_if_not_single_result(connections, criteria_string):
@@ -720,7 +708,7 @@ class ConnectionIsNotOurConnection(object):
             bus_pid = _get_bus_connections_pid(bus, connection_name)
             return bus_pid != os.getpid()
         except dbus.DBusException as e:
-            return False
+            return True
 
 
 class ConnectionHasName(object):

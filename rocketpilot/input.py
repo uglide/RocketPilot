@@ -80,7 +80,7 @@ def get_center_point(object_proxy):
 
     try:
         x, y, w, h = (
-            object_proxy.x, object_proxy.y, object_proxy.w, object_proxy.h)
+            object_proxy.x, object_proxy.y, object_proxy.width, object_proxy.height)
         _logger.debug(
             "Moving to object's center point calculated from x,y,w,h "
             "attributes.")

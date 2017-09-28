@@ -154,6 +154,18 @@ class DBusIntrospectionObject(DBusIntrospectionObjectBase):
 
         return self._execute_query(new_query)
 
+    def wait_get_children_by_type(self, type_name='*', ap_query_timeout=10, **kwargs):
+        if ap_query_timeout <= 0:
+            return self.get_children_by_type(type_name, **kwargs)
+
+        for i in range(ap_query_timeout):
+            try:
+                return self.get_children_by_type(type_name, **kwargs)
+            except StateNotFoundError:
+                sleep(1)
+
+        raise StateNotFoundError(type_name, **kwargs)
+
     def get_properties(self):
         """Returns a dictionary of all the properties on this class.
 

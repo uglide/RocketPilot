@@ -28,3 +28,12 @@ source .venv/bin/activate
 
 pip install -e . 
 ```
+
+## Introspect application
+1. Install pyqt5
+2. *OSX ONLY*: 
+```
+brew install qt5
+cp bin/osx/dbus/mainloop/* .venv/lib/python3.6/site-packages/dbus/mainloop/
+```
+3. Run vis tool: `rocketpilot-vis APPNAME`

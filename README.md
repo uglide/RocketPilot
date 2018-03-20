@@ -6,7 +6,7 @@ Cross-platform tool for functional GUI testing of Qt applications based on Canon
 
 ### Ubuntu
 ```
-sudo apt-get install python3 python3-pyqt5 -y
+sudo apt-get install python3 python3-pyqt5 python3-dbus.mainloop.pyqt5 -y
 sudo apt-get install libxpathselect-dev -y
 sudo apt-get install libdbus-1-dev libdbus-glib-1-dev -y
 

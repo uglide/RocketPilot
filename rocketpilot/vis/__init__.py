@@ -27,7 +27,11 @@ def vis_main():
     from dbus.mainloop.pyqt5 import DBusQtMainLoop
     from PyQt5 import QtWidgets
     from rocketpilot.vis.main_window import MainWindow
-    from rocketpilot.vis.bus_enumerator import BusEnumerator
+    from rocketpilot.launcher import ApplicationLauncher
+
+    if len(sys.argv) < 2:
+        print("Usage: rocketpilot-vis APP_PATH [APP_ARGS]")
+        exit(1)
 
     app = QtWidgets.QApplication(sys.argv)
     app.setApplicationName("Autopilot")
@@ -38,9 +42,15 @@ def vis_main():
 
     window = MainWindow(session_bus)
 
-    bus_enumerator = BusEnumerator(session_bus)
-    bus_enumerator.new_interface_found.connect(window.on_interface_found)
-    bus_enumerator.start_trawl()
+    launcher = ApplicationLauncher()
+
+    if len(sys.argv) > 2:
+        args = sys.argv[2:]
+    else:
+        args = []
+
+    window.app = launcher.launch(sys.argv[1], arguments=args)
+    window.on_proxy_object_built(window.app)
 
     window.show()
     sys.exit(app.exec_())

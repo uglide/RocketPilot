@@ -20,15 +20,9 @@
 
 import logging
 
-import dbus
 from PyQt5 import QtGui, QtCore, QtWidgets
 
-from rocketpilot.constants import AP_INTROSPECTION_IFACE
 from rocketpilot.exceptions import StateNotFoundError
-from rocketpilot.introspection._search import (
-    _get_dbus_address_object,
-    _make_proxy_object_async
-)
 from rocketpilot.introspection.qt import QtObjectProxyMixin
 from rocketpilot.vis.objectproperties import TreeNodeDetailWidget
 from rocketpilot.vis.resources import (
@@ -136,21 +130,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree_view.set_filtered(False)
         # resetting the filter will always invalidate the current overlay
         self.visual_indicator.tree_node_changed(None)
-
-    def on_interface_found(self, conn, obj, iface):
-        if iface == AP_INTROSPECTION_IFACE:
-            self.statusBar().showMessage('Updating connection list')
-            try:
-                dbus_address_instance = _get_dbus_address_object(
-                    str(conn), str(obj), self._dbus_bus)
-                _make_proxy_object_async(
-                    dbus_address_instance,
-                    None,
-                    self.on_proxy_object_built,
-                    self.on_dbus_error
-                )
-            except (dbus.DBusException, RuntimeError) as e:
-                _logger.warning("Invalid introspection interface: %s" % str(e))
 
     def on_proxy_object_built(self, proxy_object):
         cls_name = proxy_object.__class__.__name__

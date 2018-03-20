@@ -160,8 +160,12 @@ class DBusIntrospectionObject(DBusIntrospectionObjectBase):
 
         for i in range(ap_query_timeout):
             try:
-                return self.get_children_by_type(type_name, **kwargs)
-            except StateNotFoundError:
+                result = self.get_children_by_type(type_name, **kwargs)
+
+                if not result:
+                    raise ValueError()
+
+            except (StateNotFoundError, ValueError):
                 sleep(1)
 
         raise StateNotFoundError(type_name, **kwargs)

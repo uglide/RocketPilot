@@ -67,7 +67,7 @@ class Query(object):
     PARENT = b'..'
     WILDCARD = b'*'
 
-    def __init__(self, parent, operation, query, filters={}):
+    def __init__(self, parent, operation, query, filters=None):
         """Create a new query object.
 
         You shouldn't need to call this directly.
@@ -94,6 +94,9 @@ class Query(object):
             to select a parent node in the introspection tree.
 
         """
+        if not filters:
+            filters = {}
+
         if not isinstance(query, bytes):
             raise TypeError(
                 "'query' parameter must be bytes, not %s"
@@ -214,7 +217,7 @@ class Query(object):
         return Query(None, Query.Operation.CHILD, b'')
 
     @staticmethod
-    def whole_tree_search(child_name, filters={}):
+    def whole_tree_search(child_name, filters=None):
         """Return a query capable of searching the entire introspection tree.
 
         .. warning::
@@ -226,7 +229,9 @@ class Query(object):
 
         """
         child_name = _try_encode_type_name(child_name)
-        return Query(None, Query.Operation.DESCENDANT, child_name, filters)
+        return Query(
+            None, Query.Operation.DESCENDANT, child_name, filters or {}
+        )
 
     def needs_client_side_filtering(self):
         """Return true if this query requires some filtering on the client-side
@@ -278,7 +283,7 @@ class Query(object):
     def __repr__(self):
         return "Query(%r)" % self.server_query_bytes()
 
-    def select_child(self, child_name, filters={}):
+    def select_child(self, child_name, filters=None):
         """Return a query matching an immediate child.
 
         Keyword arguments may be used to restrict which nodes to match.
@@ -293,10 +298,10 @@ class Query(object):
             self,
             Query.Operation.CHILD,
             child_name,
-            filters
+            filters or {}
         )
 
-    def select_descendant(self, ancestor_name, filters={}):
+    def select_descendant(self, ancestor_name, filters=None):
         """Return a query matching an ancestor of the current node.
 
         :param ancestor_name: The name of the ancestor node to match.
@@ -309,7 +314,7 @@ class Query(object):
             self,
             Query.Operation.DESCENDANT,
             ancestor_name,
-            filters
+            filters or {}
         )
 
     def select_parent(self):

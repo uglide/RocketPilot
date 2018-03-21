@@ -24,7 +24,7 @@ import sys
 assert sys.version_info >= (3,), 'Python 3 is required'
 
 
-VERSION = '0.1.0'
+VERSION = '0.2.0'
 
 
 setup(

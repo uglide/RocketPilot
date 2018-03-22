@@ -20,8 +20,7 @@ class Mouse(PyMouse):
 
          """
         x, y = get_center_point(object_proxy)
-        self.click(x, y, button=button, n=n)
-
+        self.click(int(x), int(y), button=button, n=n)
 
     def move_to_object(self, object_proxy):
         """Attempts to move the mouse to 'object_proxy's centre point.
@@ -38,7 +37,7 @@ class Mouse(PyMouse):
 
         """
         x, y = get_center_point(object_proxy)
-        self.move(x, y)
+        self.move(int(x), int(y))
 
 
 def get_center_point(object_proxy):

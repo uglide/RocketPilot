@@ -382,6 +382,7 @@ class DBusIntrospectionObject(DBusIntrospectionObjectBase):
                 return self._select_single(type_name, **kwargs)
             except StateNotFoundError:
                 sleep(1)
+                self.refresh_state()
         raise StateNotFoundError(type_name, **kwargs)
 
     def _select_many(self, type_name, **kwargs):

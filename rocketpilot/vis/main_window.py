@@ -116,10 +116,11 @@ class MainWindow(QtWidgets.QMainWindow):
         # our model object gets created later.
         self.tree_model = None
 
-    def on_filter(self, node_name, filters):
-        node_name = str(node_name)
+    def on_filter(self, attr_name, attr_value, filters):
+        attr_value = str(attr_value)
         if self.proxy_object:
-            p = self.proxy_object.select_many(objectName=node_name)
+            self.proxy_object.refresh_state()
+            p = self.proxy_object.select_many(attr_name=attr_value)
             self.tree_model.set_tree_roots(p)
             self.tree_view.set_filtered(True)
         # applying the filter will always invalidate the current overlay
@@ -490,7 +491,7 @@ class FilterPane(QtWidgets.QDockWidget):
 
     """A widget that provides a filter UI."""
 
-    apply_filter = QtCore.pyqtSignal(str, list)
+    apply_filter = QtCore.pyqtSignal(str, str, list)
     reset_filter = QtCore.pyqtSignal()
 
     class ControlWidget(QtWidgets.QWidget):
@@ -500,9 +501,14 @@ class FilterPane(QtWidgets.QDockWidget):
             self._layout = QtWidgets.QFormLayout(self)
 
             self.node_name_edit = QtWidgets.QLineEdit()
+            self.node_value_edit = QtWidgets.QLineEdit()
+
             self._layout.addRow(
-                QtWidgets.QLabel("ObjectName:"),
-                self.node_name_edit
+                QtWidgets.QLabel("Property name & value:"),
+            )
+            self._layout.addRow(
+                self.node_name_edit,
+                self.node_value_edit,
             )
 
             btn_box = QtWidgets.QDialogButtonBox()
@@ -528,7 +534,8 @@ class FilterPane(QtWidgets.QDockWidget):
 
     def on_apply_clicked(self):
         node_name = self.control_widget.node_name_edit.text()
-        self.apply_filter.emit(node_name, [])
+        node_value = self.control_widget.node_value_edit.text()
+        self.apply_filter.emit(node_name, node_value, [])
 
     def set_enabled(self, enabled):
         self.control_widget.setEnabled(enabled)

@@ -26,7 +26,7 @@ import subprocess
 import signal
 
 from rocketpilot import constants
-from rocketpilot.application import ApplicationProxy
+from rocketpilot.application import ApplicationItemProxy
 from rocketpilot._timeout import Timeout
 from rocketpilot.introspection import (
     get_proxy_object_for_existing_process,
@@ -36,7 +36,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ApplicationLauncher(object):
-    def __init__(self, emulator_base=ApplicationProxy, dbus_bus='session'):
+    def __init__(self, emulator_base=ApplicationItemProxy, dbus_bus='session'):
         self.proxy_base = emulator_base
         self.dbus_bus = dbus_bus
 

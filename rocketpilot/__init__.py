@@ -18,9 +18,9 @@
 #
 
 from .launcher import ApplicationLauncher
-from .application import ApplicationProxy
+from .application import ApplicationItemProxy
 
 __all__ = [
     'ApplicationLauncher',
-    'ApplicationProxy',
+    'ApplicationItemProxy',
 ]

@@ -8,7 +8,8 @@ _logger = logging.getLogger(__name__)
 
 class Mouse(PyMouse):
 
-    def click_object(self, object_proxy, button=1, n=1):
+    def click_object(self, object_proxy, button=1, n=1,
+                     offset_x=None, offset_y=None):
         """Click the center point of a given object.
 
         It does this by looking for several attributes, in order. The first
@@ -19,7 +20,11 @@ class Mouse(PyMouse):
          * x, y, w, h
 
          """
-        x, y = get_center_point(object_proxy)
+        x, y = get_center_point(
+            object_proxy,
+            offset_x=offset_x,
+            offset_y=offset_y
+        )
         self.click(int(x), int(y), button=button, n=n)
 
     def move_to_object(self, object_proxy):
@@ -40,7 +45,7 @@ class Mouse(PyMouse):
         self.move(int(x), int(y))
 
 
-def get_center_point(object_proxy):
+def get_center_point(object_proxy, offset_x=None, offset_y=None):
     """Get the center point of an object.
 
     It searches for several different ways of determining exactly where the
@@ -59,10 +64,15 @@ def get_center_point(object_proxy):
         attributes.
 
     """
+
+    def get_offsets(w, h):
+        return offset_x or w//2, offset_y or h//2
+
     try:
         x, y, w, h = object_proxy.globalRect
         _logger.debug("Moving to object's globalRect coordinates.")
-        return x + w//2, y + h//2
+        o_x, o_y = get_offsets(w, h)
+        return x + o_x, y + o_y
     except AttributeError:
         pass
     except (TypeError, ValueError):
@@ -83,7 +93,8 @@ def get_center_point(object_proxy):
         _logger.debug(
             "Moving to object's center point calculated from x,y,w,h "
             "attributes.")
-        return x + w//2, y + h//2
+        o_x, o_y = get_offsets(w, h)
+        return x + o_x, y + o_y
     except AttributeError:
         raise ValueError(
             "Object '%r' does not have any recognised position attributes" %

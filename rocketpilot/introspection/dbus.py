@@ -154,7 +154,7 @@ class DBusIntrospectionObject(DBusIntrospectionObjectBase):
 
         return self._execute_query(new_query)
 
-    def wait_get_children_by_type(self, type_name='*', ap_query_timeout=10, **kwargs):
+    def wait_get_children_by_type(self, type_name='*', ap_query_timeout=5, **kwargs):
         if ap_query_timeout <= 0:
             return self.get_children_by_type(type_name, **kwargs)
 
@@ -325,7 +325,7 @@ class DBusIntrospectionObject(DBusIntrospectionObjectBase):
         """
         return self._select_single(type_name, **kwargs)
 
-    def wait_select_single(self, type_name='*', ap_query_timeout=10, **kwargs):
+    def wait_select_single(self, type_name='*', ap_query_timeout=5, **kwargs):
         """Get a proxy object matching some search criteria, retrying if no
         object is found until a timeout is reached.
 
@@ -445,7 +445,7 @@ class DBusIntrospectionObject(DBusIntrospectionObjectBase):
     def wait_select_many(
             self,
             type_name='*',
-            ap_query_timeout=10,
+            ap_query_timeout=5,
             ap_result_count=1,
             ap_result_sort_keys=None,
             **kwargs

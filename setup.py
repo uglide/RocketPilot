@@ -37,7 +37,7 @@ setup(
     url='https://github.com/uglide/RocketPilot',
     license='GPLv3',
     install_requires=[
-        'decorator',
+        'decorator==4.2.1',
         'psutil',
         'testtools',
         'dbus-python',

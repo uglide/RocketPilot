@@ -4,6 +4,7 @@ from pykeyboard import PyKeyboard
 
 from rocketpilot.introspection import ProxyBase
 from rocketpilot.input import Mouse
+from rocketpilot.exceptions import StateNotFoundError
 
 mouse_obj = Mouse()
 keyboard_obj = PyKeyboard()
@@ -42,3 +43,21 @@ class ApplicationItemProxy(ProxyBase):
 
     def wait_object(self, objectName):
         return self.wait_select_single(objectName=objectName)
+
+    def wait_select_any(self, type_name, filter_groups, ap_query_timeout=5,
+                        delay=1):
+        if ap_query_timeout <= 0:
+            ap_query_timeout = 1
+            delay = 0
+
+        for i in range(ap_query_timeout):
+            for filters in filter_groups:
+                try:
+                    return self._select_single(type_name, **filters)
+                except StateNotFoundError:
+                    continue
+
+            time.sleep(delay)
+            self.refresh_state()
+
+        raise StateNotFoundError(type_name)

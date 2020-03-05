@@ -16,24 +16,76 @@ source .venv/bin/activate
 
 pip install -e . 
 ```
-### OS X
+
+### macOS
+> WARNING: Do NOT install Qt from brew, use the official Qt version instead (https://www.qt.io/download-open-source).
 
 ```
-brew install python3 pkgconfig dbus dbus-glib pyqt5
+brew install python3 pkgconfig dbus dbus-glib
 brew services start dbus
 
-virtualenv --system-site-packages -p python3 .venv
+python3 -m venv --system-site-packages ~/.venv
 
-source .venv/bin/activate
+source ~/.venv/bin/activate
 
 pip install -e . 
 ```
 
 ## Introspect application
-1. Install pyqt5
-2. *OSX ONLY*: 
-```
-brew install qt5
-cp bin/osx/dbus/mainloop/* .venv/lib/python3.6/site-packages/dbus/mainloop/
-```
-3. Run vis tool: `rocketpilot-vis APPNAME`
+0. Build rocketpilot-driver
+    
+    ### macOS
+    ```bash
+    export PATH=~/Qt/5.14.1/clang_64/bin:$PATH
+    ln -s ~/Qt/5.14.1/clang_64/bin/qmake /usr/local/bin/qmake
+    cd rocketpilot-driver
+    qmake
+    make -j4
+ 
+    export DYLD_LIBRARY_PATH=~/Qt/5.14.1/clang_64/lib:~/RocketPilot/rocketpilot-driver
+
+    brew install boost
+    cd 3rdparty/xpathselect
+    qmake
+    make -j4
+    ```
+
+### Ubuntu
+1. Install PyQt5
+2. Run vis tool
+    ```bash
+    rocketpilot-vis APPNAME
+    ```
+
+### macOS
+1. Build and install PyQt5 from source
+    https://www.riverbankcomputing.com/static/Docs/PyQt5/installation.html#building-and-installing-from-source
+    
+    ```bash
+    pip install sip PyQt-builder PyQt5-sip
+    
+    # Get PyQt5
+    curl -O https://files.pythonhosted.org/packages/3a/fb/eb51731f2dc7c22d8e1a63ba88fb702727b324c6352183a32f27f73b8116/PyQt5-5.14.1.tar.gz -o ~/PyQt5-5.14.1.tar.gz
+    gunzip -c ~/PyQt5-5.14.1.tar.gz | tar xopf -
+    
+    # Get dbus-python
+    curl -O https://dbus.freedesktop.org/releases/dbus-python/dbus-python-1.2.16.tar.gz -o ~/dbus-python-1.2.16.tar.gz
+    gunzip -c ~/dbus-python-1.2.16.tar.gz | tar xopf -
+    
+    # Install PyQt5
+    cd ~/PyQt5-5.14.1
+    sip-install --dbus ~/dbus-python-1.2.16/include
+    
+    cp ~/PyQt5-5.14.1/build/dbus/pyqt5.abi3.so ~/.venv/lib/python3.7/site-packages/dbus/mainloop/
+    ```
+    
+    Up-to-date versions:
+    
+    - PyQt5 https://pypi.org/project/PyQt5/#files
+    
+    - dbus-python https://dbus.freedesktop.org/releases/dbus-python/
+
+2. Run vis tool
+    ```bash
+    rocketpilot-vis APPNAME
+    ```

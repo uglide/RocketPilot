@@ -41,8 +41,8 @@ class ApplicationItemProxy(ProxyBase):
 
         return current_item
 
-    def wait_object(self, objectName):
-        return self.wait_select_single(objectName=objectName)
+    def wait_object(self, objectName, **kwargs):
+        return self.wait_select_single(objectName=objectName, **kwargs)
 
     def wait_select_any(self, type_name, filter_groups, ap_query_timeout=5,
                         delay=1):

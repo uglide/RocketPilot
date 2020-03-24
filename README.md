@@ -31,24 +31,25 @@ source ~/.venv/bin/activate
 pip install -e . 
 ```
 
-## Introspect application
-0. Build rocketpilot-driver
-    
-    ### macOS
-    ```bash
-    export PATH=~/Qt/5.14.1/clang_64/bin:$PATH
-    ln -s ~/Qt/5.14.1/clang_64/bin/qmake /usr/local/bin/qmake
-    cd rocketpilot-driver
-    qmake
-    make -j4
- 
-    export DYLD_LIBRARY_PATH=~/Qt/5.14.1/clang_64/lib:~/RocketPilot/rocketpilot-driver
+### Windows
+1. Install Python3, Qt5 (https://www.qt.io/download-open-source)
+2. Install Msys2 to C:\msys64 & update core packages
+3. Install dbus:
+```
+pacman -S mingw64/mingw-w64-x86_64-dbus
+```
+4. Update C:\msys64\mingw64\share\dbus-1\session.conf :
+```
+<listen>tcp:host=localhost,port=54321,family=ipv4</listen>
+```
+5. Add `C:\msys64\mingw64\bin` to PATH
+6. Add `DBUS_SESSION_BUS_ADDRESS` env variable with value `tcp:host=localhost,port=54321,family=ipv4`
+7. Run `dbus-daemon.exe --session`
 
-    brew install boost
-    cd 3rdparty/xpathselect
-    qmake
-    make -j4
-    ```
+
+## Introspect application
+0. Build rocketpilot-driver https://github.com/uglide/rocketpilot-driver/blob/master/README.md
+
 
 ### Ubuntu and macOS
 1. Install PyQt5

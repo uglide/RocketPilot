@@ -24,7 +24,20 @@ import sys
 assert sys.version_info >= (3,), 'Python 3 is required'
 
 
-VERSION = '0.2.0'
+VERSION = '0.3.0'
+
+dependencies = [
+    'decorator==4.2.1',
+    'psutil',
+    'testtools',
+
+    'PyUserInput @ https://github.com/uglide/PyUserInput/archive/master.zip',
+    'pytz',
+    'python-dateutil',
+]
+
+if sys.platform != 'win32':
+    dependencies.append('dbus-python')
 
 
 setup(
@@ -36,15 +49,7 @@ setup(
     author_email='u.glide@gmail.com',
     url='https://github.com/uglide/RocketPilot',
     license='GPLv3',
-    install_requires=[
-        'decorator==4.2.1',
-        'psutil',
-        'testtools',
-        'dbus-python',
-        'PyUserInput',
-        'pytz',
-        'python-dateutil',
-    ],
+    install_requires=dependencies,
     packages=find_packages(),
     ext_modules=[],
     entry_points={

@@ -38,16 +38,17 @@ pip install -e .
     ```bash
     export PATH=~/Qt/5.14.1/clang_64/bin:$PATH
     ln -s ~/Qt/5.14.1/clang_64/bin/qmake /usr/local/bin/qmake
-    cd rocketpilot-driver
+ 
+    brew install boost
+    cd rocketpilot-driver/3rdparty/xpathselect
+    qmake
+    make -j4
+ 
+    cd ../..
     qmake
     make -j4
  
     export DYLD_LIBRARY_PATH=~/Qt/5.14.1/clang_64/lib:~/RocketPilot/rocketpilot-driver
-
-    brew install boost
-    cd 3rdparty/xpathselect
-    qmake
-    make -j4
     ```
 
 ### Ubuntu

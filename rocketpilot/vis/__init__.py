@@ -24,7 +24,7 @@ import sys
 
 def vis_main():
     # To aid in testing only import when we are launching the GUI component
-    from dbus.mainloop.pyqt5 import DBusQtMainLoop
+    from dbus.mainloop.glib import DBusGMainLoop
     from PyQt5 import QtWidgets
     from rocketpilot.vis.main_window import MainWindow
     from rocketpilot.launcher import ApplicationLauncher
@@ -37,7 +37,7 @@ def vis_main():
     app.setApplicationName("Autopilot")
     app.setOrganizationName("Canonical")
 
-    dbus_loop = DBusQtMainLoop(set_as_default=True)
+    dbus_loop = DBusGMainLoop(set_as_default=True)
     session_bus = dbus.SessionBus(mainloop=dbus_loop)
 
     window = MainWindow(session_bus)
@@ -51,6 +51,6 @@ def vis_main():
 
     window.app = launcher.launch(sys.argv[1], arguments=args)
     window.on_proxy_object_built(window.app)
-
+    window.resize(1100, 700)
     window.show()
     sys.exit(app.exec_())

@@ -20,15 +20,36 @@
 
 """Code for introspection tree object properties."""
 
-
+import dbus
 from PyQt5 import QtGui, QtCore, QtWidgets
 
 
-from rocketpilot.vis.resources import get_qt_icon, dbus_string_rep
 from rocketpilot.introspection.qt import QtObjectProxyMixin
 
 
 __all__ = ['TreeNodeDetailWidget']
+
+
+def dbus_string_rep(dbus_type):
+    """Get a string representation of various dbus types."""
+    if isinstance(dbus_type, dbus.Boolean):
+        return repr(bool(dbus_type))
+    if isinstance(dbus_type, dbus.String):
+        return dbus_type.encode('utf-8', errors='ignore').decode('utf-8')
+    if (isinstance(dbus_type, dbus.Int16) or
+            isinstance(dbus_type, dbus.UInt16) or
+            isinstance(dbus_type, dbus.Int32) or
+            isinstance(dbus_type, dbus.UInt32) or
+            isinstance(dbus_type, dbus.Int64) or
+            isinstance(dbus_type, dbus.UInt64)):
+        return repr(int(dbus_type))
+    if isinstance(dbus_type, dbus.Double):
+        return repr(float(dbus_type))
+    if (isinstance(dbus_type, dbus.Array) or
+            isinstance(dbus_type, dbus.Struct)):
+        return ', '.join([dbus_string_rep(i) for i in dbus_type])
+    else:
+        return repr(dbus_type)
 
 
 class TreeNodeDetailWidget(QtWidgets.QTabWidget):
@@ -53,7 +74,7 @@ class TreeNodeDetailWidget(QtWidgets.QTabWidget):
             if view_tab_idx == -1:
                 # view is not currently shown.
                 if view.is_relevant(new_node):
-                    self.addTab(view, view.icon(), view.name())
+                    self.addTab(view, view.name())
             else:
                 # view is in tab bar already.
                 if not view.is_relevant(new_node):
@@ -154,7 +175,7 @@ class SignalView(AbstractView):
         return "Signals"
 
     def icon(self):
-        return get_qt_icon()
+        return ""
 
     def is_relevant(self, node):
         return node is not None and isinstance(node, QtObjectProxyMixin)
@@ -194,7 +215,7 @@ class SlotView(AbstractView):
         return "Slots"
 
     def icon(self):
-        return get_qt_icon()
+        return ""
 
     def is_relevant(self, node):
         return node is not None and isinstance(node, QtObjectProxyMixin)

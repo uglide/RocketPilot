@@ -25,11 +25,6 @@ from PyQt5 import QtGui, QtCore, QtWidgets
 from rocketpilot.exceptions import StateNotFoundError
 from rocketpilot.introspection.qt import QtObjectProxyMixin
 from rocketpilot.vis.objectproperties import TreeNodeDetailWidget
-from rocketpilot.vis.resources import (
-    get_filter_icon,
-    get_overlay_icon,
-    get_qt_icon,
-)
 
 _logger = logging.getLogger(__name__)
 
@@ -79,7 +74,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tree_view = ProxyObjectTreeViewWidget(self.splitter)
         self.detail_widget = TreeNodeDetailWidget(self.splitter)
 
-        self.splitter.setStretchFactor(0, 0)
+        self.splitter.setStretchFactor(0, 2)
         self.splitter.setStretchFactor(1, 100)
         self.setCentralWidget(self.splitter)
 
@@ -101,12 +96,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.addDockWidget(QtCore.Qt.RightDockWidgetArea, self.filter_widget)
         self.toggle_dock_widget_action = self.filter_widget.toggleViewAction()
         self.toggle_dock_widget_action.setText('Show/Hide Filter Pane')
-        self.toggle_dock_widget_action.setIcon(get_filter_icon())
         self.toolbar.addAction(self.toggle_dock_widget_action)
 
         self.visual_indicator = VisualComponentPositionIndicator()
         self.toggle_overlay_action = self.toolbar.addAction(
-            get_overlay_icon(),
             "Enable/Disable component overlay"
         )
         self.toggle_overlay_action.setCheckable(True)
@@ -143,23 +136,19 @@ class MainWindow(QtWidgets.QMainWindow):
         print(args)
 
     def update_selectable_interfaces(self):
-        selected_text = self.connection_list.currentText()
         self.connection_list.clear()
         self.connection_list.addItem("Please select a connection", None)
         for name, proxy_obj in self.selectable_interfaces.items():
             if isinstance(proxy_obj, QtObjectProxyMixin):
                 self.connection_list.addItem(
-                    get_qt_icon(),
                     name,
                     proxy_obj
                 )
             else:
                 self.connection_list.addItem(name, proxy_obj)
 
-        prev_selected = self.connection_list.findText(selected_text,
-                                                      QtCore.Qt.MatchExactly)
-        if prev_selected == -1:
-            prev_selected = 0
+        prev_selected = 1 if self.connection_list.count() == 2 else 0
+
         self.connection_list.setCurrentIndex(prev_selected)
 
     def conn_list_activated(self, index):
@@ -328,6 +317,7 @@ class ProxyObjectTreeViewWidget(QtWidgets.QWidget):
             self.selection_changed
         )
         self.set_filtered(False)
+        self.tree_view.setColumnWidth(0, 500)
 
     def set_filtered(self, is_filtered):
         if is_filtered:

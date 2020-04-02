@@ -6,7 +6,7 @@ Cross-platform tool for functional GUI testing of Qt applications based on Canon
 
 ### Ubuntu
 ```
-sudo apt-get install python3 python3-pyqt5 python3-dbus.mainloop.pyqt5 -y
+sudo apt-get install python3 python3-pyqt5 -y
 sudo apt-get install libxpathselect-dev -y
 sudo apt-get install libdbus-1-dev libdbus-glib-1-dev -y
 
@@ -50,41 +50,8 @@ pip install -e .
     make -j4
     ```
 
-### Ubuntu
+### Ubuntu and macOS
 1. Install PyQt5
-2. Run vis tool
-    ```bash
-    rocketpilot-vis APPNAME
-    ```
-
-### macOS
-1. Build and install PyQt5 from source
-    https://www.riverbankcomputing.com/static/Docs/PyQt5/installation.html#building-and-installing-from-source
-    
-    ```bash
-    pip install sip PyQt-builder PyQt5-sip
-    
-    # Get PyQt5
-    curl -O https://files.pythonhosted.org/packages/3a/fb/eb51731f2dc7c22d8e1a63ba88fb702727b324c6352183a32f27f73b8116/PyQt5-5.14.1.tar.gz -o ~/PyQt5-5.14.1.tar.gz
-    gunzip -c ~/PyQt5-5.14.1.tar.gz | tar xopf -
-    
-    # Get dbus-python
-    curl -O https://dbus.freedesktop.org/releases/dbus-python/dbus-python-1.2.16.tar.gz -o ~/dbus-python-1.2.16.tar.gz
-    gunzip -c ~/dbus-python-1.2.16.tar.gz | tar xopf -
-    
-    # Install PyQt5
-    cd ~/PyQt5-5.14.1
-    sip-install --dbus ~/dbus-python-1.2.16/include
-    
-    cp ~/PyQt5-5.14.1/build/dbus/pyqt5.abi3.so ~/.venv/lib/python3.7/site-packages/dbus/mainloop/
-    ```
-    
-    Up-to-date versions:
-    
-    - PyQt5 https://pypi.org/project/PyQt5/#files
-    
-    - dbus-python https://dbus.freedesktop.org/releases/dbus-python/
-
 2. Run vis tool
     ```bash
     rocketpilot-vis APPNAME

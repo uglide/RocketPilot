@@ -40,7 +40,8 @@ class ApplicationLauncher(object):
         self.proxy_base = emulator_base
         self.dbus_bus = dbus_bus
 
-    def launch(self, application, arguments=None, launch_dir=None, capture_output=False):
+    def launch(self, application, arguments=None, launch_dir=None,
+               capture_output=False, env=None):
         """Launch an application and return a proxy object.
 
         Use this method to launch an application and start testing it. The
@@ -111,7 +112,7 @@ class ApplicationLauncher(object):
         self._app_path = app_path = _get_application_path(application)
         app_path, arguments = self._setup_environment(app_path, arguments)
         self._process = process = self._launch_application_process(
-            app_path, capture_output, launch_dir, arguments)
+            app_path, capture_output, launch_dir, arguments, env)
         proxy_object = get_proxy_object_for_existing_process(
             dbus_bus=self.dbus_bus,
             emulator_base=self.proxy_base,
@@ -128,12 +129,13 @@ class ApplicationLauncher(object):
         )
 
     def _launch_application_process(self, app_path, capture_output, cwd,
-                                    arguments):
+                                    arguments, env):
         process = launch_process(
             app_path,
             arguments,
             capture_output,
             cwd=cwd,
+            env=env
         )
 
         return process

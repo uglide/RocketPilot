@@ -24,6 +24,7 @@ import os
 import psutil
 import subprocess
 import signal
+import sys
 
 from rocketpilot import constants
 from rocketpilot.application import ApplicationItemProxy
@@ -173,7 +174,7 @@ def launch_process(application, args, capture_output=False, **kwargs):
         stdout=cap_mode,
         stderr=cap_mode,
         close_fds=True,
-        preexec_fn=os.setsid,
+        start_new_session=True,
         universal_newlines=True,
         **kwargs
     )
@@ -181,6 +182,10 @@ def launch_process(application, args, capture_output=False, **kwargs):
 
 
 def _get_application_path(application):
+    # ignore this check on windows
+    if sys.platform == "win32":
+        return application
+
     try:
         return subprocess.check_output(
             ['which', application],

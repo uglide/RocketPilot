@@ -31,28 +31,28 @@ source ~/.venv/bin/activate
 pip install -e . 
 ```
 
+### Windows
+1. Install Python **3.7 amd64**, Qt5 (https://www.qt.io/download-open-source)
+2. Download [pre-compiled dbus-python package](https://github.com/uglide/dbus-python-windows) to 
+**Python 3.7 amd64** installation directory 
+3. Install Msys2 to C:\msys64 & update core packages
+4. Install dbus:
+```
+pacman -S mingw64/mingw-w64-x86_64-dbus
+```
+5. Update C:\msys64\mingw64\share\dbus-1\session.conf :
+```
+<listen>tcp:host=localhost,port=54321,family=ipv4</listen>
+```
+6. Add `C:\msys64\mingw64\bin` to PATH
+7. Add `DBUS_SESSION_BUS_ADDRESS` env variable with value `tcp:host=localhost,port=54321,family=ipv4`
+8. Run `dbus-daemon.exe --session`
+
+
 ## Introspect application
-0. Build rocketpilot-driver
-    
-    ### macOS
-    ```bash
-    export PATH=~/Qt/5.14.1/clang_64/bin:$PATH
-    ln -s ~/Qt/5.14.1/clang_64/bin/qmake /usr/local/bin/qmake
-    cd rocketpilot-driver
-    qmake
-    make -j4
- 
-    export DYLD_LIBRARY_PATH=~/Qt/5.14.1/clang_64/lib:~/RocketPilot/rocketpilot-driver
-
-    brew install boost
-    cd 3rdparty/xpathselect
-    qmake
-    make -j4
-    ```
-
-### Ubuntu and macOS
-1. Install PyQt5
-2. Run vis tool
+1. Build rocketpilot-driver https://github.com/uglide/rocketpilot-driver/blob/master/README.md
+2. Install PyQt5
+3. Run vis tool
     ```bash
     rocketpilot-vis APPNAME
     ```

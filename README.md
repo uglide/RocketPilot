@@ -35,18 +35,26 @@ pip install -e .
 1. Install Python **3.7 amd64**, Qt5 (https://www.qt.io/download-open-source)
 2. Download [pre-compiled dbus-python package](https://github.com/uglide/dbus-python-windows) to 
 **Python 3.7 amd64** installation directory 
-3. Install Msys2 to C:\msys64 & update core packages
-4. Install dbus:
+3. Verify that `dbus-python` package is installed correctly:
+```
+C:\Python37-x64>python
+Python 3.7.3 (v3.7.3:ef4ec6ed12, Mar 25 2019, 22:22:05) [MSC v.1916 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import dbus.mainloop.glib
+>>> # No errors should appear here
+```
+4. Install Msys2 to C:\msys64 & update core packages
+5. Install dbus:
 ```
 pacman -S mingw64/mingw-w64-x86_64-dbus
 ```
-5. Update C:\msys64\mingw64\share\dbus-1\session.conf :
+6. Update C:\msys64\mingw64\share\dbus-1\session.conf :
 ```
 <listen>tcp:host=localhost,port=54321,family=ipv4</listen>
 ```
-6. Add `C:\msys64\mingw64\bin` to PATH
-7. Add `DBUS_SESSION_BUS_ADDRESS` env variable with value `tcp:host=localhost,port=54321,family=ipv4`
-8. Run `dbus-daemon.exe --session`
+7. Add `C:\msys64\mingw64\bin` to PATH
+8. Add `DBUS_SESSION_BUS_ADDRESS` env variable with value `tcp:host=localhost,port=54321,family=ipv4`
+9. Run `dbus-daemon.exe --session`
 
 
 ## Introspect application

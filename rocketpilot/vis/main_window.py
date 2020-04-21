@@ -111,9 +111,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def on_filter(self, attr_name, attr_value, filters):
         attr_value = str(attr_value)
+
+        filter = {attr_name: attr_value}
+
         if self.proxy_object:
             self.proxy_object.refresh_state()
-            p = self.proxy_object.select_many(attr_name=attr_value)
+            p = self.proxy_object.select_many(**filter)
             self.tree_model.set_tree_roots(p)
             self.tree_view.set_filtered(True)
         # applying the filter will always invalidate the current overlay

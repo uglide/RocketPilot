@@ -22,7 +22,7 @@ import logging
 
 from PyQt5 import QtGui, QtCore, QtWidgets
 
-from rocketpilot.exceptions import StateNotFoundError
+from rocketpilot.exceptions import InvalidXPathQuery, StateNotFoundError
 from rocketpilot.introspection.qt import QtObjectProxyMixin
 from rocketpilot.vis.objectproperties import TreeNodeDetailWidget
 
@@ -118,7 +118,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if self.proxy_object:
             self.proxy_object.refresh_state()
-            p = self.proxy_object.select_many(**filter)
+            try:
+                p = self.proxy_object.select_many(**filter)
+            except InvalidXPathQuery as e:
+                self.filter_widget.control_widget.node_name_edit.setToolTip(
+                    f'Invalid parameters: {e}')
+
+                self.filter_widget.control_widget.node_name_edit.setStyleSheet(
+                    'QLineEdit { '
+                    'border-style: outset;'
+                    'border-width: 1px;'
+                    'border-color: red; }')
+                return
             self.tree_model.set_tree_roots(p)
             self.tree_view.set_filtered(True)
         # applying the filter will always invalidate the current overlay
@@ -514,6 +525,7 @@ class FilterPane(QtWidgets.QDockWidget):
         self.setObjectName("FilterTreePane")
         self.control_widget = FilterPane.ControlWidget(self)
 
+        self.control_widget.node_name_edit.textChanged.connect(self.reset_style)
         self.control_widget.node_name_edit.returnPressed.connect(
             self.on_apply_clicked
         )
@@ -529,3 +541,7 @@ class FilterPane(QtWidgets.QDockWidget):
 
     def set_enabled(self, enabled):
         self.control_widget.setEnabled(enabled)
+
+    def reset_style(self):
+        self.control_widget.node_name_edit.setStyleSheet('')
+        self.control_widget.node_name_edit.setToolTip('')

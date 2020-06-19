@@ -325,11 +325,6 @@ class ProxyObjectTreeViewWidget(QtWidgets.QWidget):
     def set_filtered(self, is_filtered):
         if is_filtered:
             self.status_label.show()
-            self.tree_view.setStyleSheet("""\
-                QTreeView {
-                    background-color: #fdffe1;
-                }
-            """)
         else:
             self.status_label.hide()
             self.tree_view.setStyleSheet("")

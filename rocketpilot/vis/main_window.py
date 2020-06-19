@@ -109,7 +109,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # our model object gets created later.
         self.tree_model = None
 
-    def on_filter(self, attr_name, attr_value, filters):
+    def on_filter(self, attr_name, attr_value):
+        if not attr_name:
+            attr_name = 'objectName'
         attr_value = str(attr_value)
 
         filter = {attr_name: attr_value}
@@ -488,7 +490,7 @@ class FilterPane(QtWidgets.QDockWidget):
             super(FilterPane.ControlWidget, self).__init__(parent)
             self._layout = QtWidgets.QFormLayout(self)
 
-            self.node_name_edit = QtWidgets.QLineEdit()
+            self.node_name_edit = QtWidgets.QLineEdit(placeholderText='objectName')
             self.node_value_edit = QtWidgets.QLineEdit()
 
             self._layout.addRow(

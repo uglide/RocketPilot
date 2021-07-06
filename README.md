@@ -31,6 +31,13 @@ source ~/.venv/bin/activate
 pip install -e . 
 ```
 
+Helpful link about dbus installation and troubleshooting on macOS https://github.com/zbentley/dbus-osx-examples/blob/master/installation/README.md
+
+#### Apple Silicone
+
+Ensure that `LD_LIBRARY_PATH` contains path to libdbus, for example `/opt/homebrew/Cellar/dbus/1.12.20/lib`
+
+
 ### Windows
 1. Install Python **3.7 amd64**, Qt5 (https://www.qt.io/download-open-source)
 2. Install Msys2 to C:\msys64 & update core packages

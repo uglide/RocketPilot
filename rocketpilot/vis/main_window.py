@@ -24,6 +24,7 @@ from PyQt5 import QtGui, QtCore, QtWidgets
 
 from rocketpilot.exceptions import StateNotFoundError
 from rocketpilot.introspection.qt import QtObjectProxyMixin
+from rocketpilot.introspection import _xpathselect as xpathselect
 from rocketpilot.vis.objectproperties import TreeNodeDetailWidget
 
 _logger = logging.getLogger(__name__)
@@ -72,6 +73,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.splitter = QtWidgets.QSplitter(self)
         self.splitter.setChildrenCollapsible(False)
         self.tree_view = ProxyObjectTreeViewWidget(self.splitter)
+        self.tree_view.tree_view.customContextMenuRequested.connect(
+            self.on_customContextMenuRequested
+        )
+
         self.detail_widget = TreeNodeDetailWidget(self.splitter)
 
         self.splitter.setStretchFactor(0, 2)
@@ -108,6 +113,48 @@ class MainWindow(QtWidgets.QMainWindow):
         )
         # our model object gets created later.
         self.tree_model = None
+
+    @QtCore.pyqtSlot(QtCore.QPoint)
+    def on_customContextMenuRequested(self, pos):
+        index = self.tree_view.tree_view.indexAt(pos)
+        if not index.isValid():
+            return
+
+        tree_node = index.internalPointer()
+        proxy = tree_node.dbus_object if tree_node is not None else None
+
+        if not proxy:
+            return
+
+        parents = []
+        max_parents = min(10, len(proxy._get_parent_nodes()))
+        current = proxy
+
+        for _ in range(0, max_parents):
+            current = current.get_parent()
+
+            if not current:
+                break
+
+            parents.append(current)
+
+        menu = QtWidgets.QMenu()
+
+        for parent in parents:
+            menu.addAction(parent.get_path())
+
+        action = menu.exec_(self.tree_view.tree_view.viewport().mapToGlobal(pos))
+
+        if not action:
+            return
+
+        path = action.text()
+
+        if path and self.proxy_object:
+            query = xpathselect.Query(None, xpathselect.Query.Operation.ROOT, path.encode("utf-8"))
+            results = self.proxy_object._execute_query(query)
+            self.tree_model.set_tree_roots(results)
+            self.tree_view.set_filtered(True)
 
     def on_filter(self, attr_name, attr_value, filters):
         attr_value = str(attr_value)
@@ -306,6 +353,7 @@ class ProxyObjectTreeViewWidget(QtWidgets.QWidget):
         super(ProxyObjectTreeViewWidget, self).__init__(parent)
         layout = QtWidgets.QVBoxLayout(self)
         self.tree_view = ProxyObjectTreeView()
+        self.tree_view.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
 
         layout.addWidget(self.tree_view)
 
@@ -325,11 +373,6 @@ class ProxyObjectTreeViewWidget(QtWidgets.QWidget):
     def set_filtered(self, is_filtered):
         if is_filtered:
             self.status_label.show()
-            self.tree_view.setStyleSheet("""\
-                QTreeView {
-                    background-color: #fdffe1;
-                }
-            """)
         else:
             self.status_label.hide()
             self.tree_view.setStyleSheet("")

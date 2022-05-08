@@ -39,7 +39,7 @@ Ensure that `LD_LIBRARY_PATH` contains path to libdbus, for example `/opt/homebr
 
 
 ### Windows
-1. Install Python **3.7 amd64**, Qt5 (https://www.qt.io/download-open-source)
+1. Install Python **3.9 amd64**, Qt5 (https://www.qt.io/download-open-source)
 2. Install Msys2 to C:\msys64 & update core packages
 3. Install dbus:
 ```
@@ -53,12 +53,12 @@ pacman -S mingw64/mingw-w64-x86_64-dbus
 6. Add `DBUS_SESSION_BUS_ADDRESS` env variable with value `tcp:host=localhost,port=54321,family=ipv4`
 7. Run `dbus-daemon.exe --session`
 8. Download & unpack [pre-compiled dbus-python package](https://github.com/uglide/dbus-python-windows) to 
-**Python 3.7 amd64** installation directory 
+**Python 3.9 amd64** installation directory 
 9. Verify that `dbus-python` package is installed correctly:
 ```
-C:\Python37-x64>python
-Python 3.7.3 (v3.7.3:ef4ec6ed12, Mar 25 2019, 22:22:05) [MSC v.1916 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license" for more information.
+C:\Python39-x64>python
+>>> import os
+>>> os.add_dll_directory("C:/msys64/mingw64/bin")
 >>> import dbus.mainloop.glib
 >>> # No errors should appear here
 ```

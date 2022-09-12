@@ -37,7 +37,7 @@ dependencies = [
 ]
 
 if sys.platform != 'win32':
-    dependencies.append('dbus-python')
+    dependencies.append('dbus-python==1.2.18')
 
 
 setup(
